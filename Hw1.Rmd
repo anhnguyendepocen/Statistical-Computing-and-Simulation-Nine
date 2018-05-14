@@ -1,9 +1,28 @@
+---
+title: "Statistical Computing and Simulation"
+author: "Lin Chian Hung"
+output: 
+  html_document:
+    toc: true
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+---
+
+```{r message = FALSE}
 library(ggplot2)
 library(kableExtra)
 library(dplyr)
 library(magrittr)
+library(kableExtra)
+library(knitr)
 options(scipen = 10)
-# Question 01 -------------------------------------------------------------
+```
+
+# Question 01 
+<center><font size = 3>$I = \int_{-20}^{20} e^{-|x|}\,dx.$</font></center>
+## Find I by calculus techniques.
+```{r}
 set.seed(3)
 # Find I by calculus techniques.
 I <- function(x){
@@ -11,9 +30,10 @@ I <- function(x){
 }
 Ans1 <- integrate(I, -20, 20)
 Ans1
+```
 
-# Find I by simultaion 
-
+## Find I by simultaion 
+```{r}
 N <- 5000 # 5000 samples of size 1000.
 n <- 1000
 
@@ -63,16 +83,13 @@ Q1V <- cbind(Mc.var, N1.var, N2.var) %>% round(., digits = 5)
 Q1 <- rbind(Q1M,Q1V)
 rownames(Q1) <- c("Mean", "Variance")
 colnames(Q1) <- c("MC", "N(0,1)", "N(0,5)")
-Q1
+kable(Q1) %>% kable_styling()
+```
 
-
-
-
-
-
-# Question 02 -------------------------------------------------------------
+# Question 02
+## # Find N(0,1) mean and variance by important sampling with t3
+```{r}
 set.seed(3)
-# Find N(0,1) mean and variance by important sampling with t3
 ME <- function(x){
   1/sqrt((2*pi))*exp(-x^2/2)
 }
@@ -149,9 +166,10 @@ ggplot(diffn) +
        x="Index",
        y="Variance of estimator of variance") +
   theme_bw() 
+```
 
-
-# Find t3 mean and variance by important sampling with N(0,1)
+## Find t3 mean and variance by important sampling with N(0,1)
+```{r}
 set.seed(3)
 v <- 3
 tv <- function(x,v){
@@ -233,11 +251,5 @@ ggplot(diffn) +
        x="Index",
        y="Variance of estimator of variance") +
   theme_bw() 
+```
 
-f <- function(x){
-  (1/40)/dnorm(x,0,5)
-}
-
-curve(f,-20,20,ylab="f(x)/g(x)")
-curve(dnorm(x),5,10,col = "red",ylab = "p", add = T,ylim = c(0,0.004))
-curve(dt(x,3),5,10,col = "blue",ylab = "p",ylim = c(0,0.004), main = "t(3)/ N(0,1)")
