@@ -1,5 +1,6 @@
 library(mvtnorm)
 library(dplyr)
+library(ggplot2)
 
 
 # EM ----------------------------------------------------------------------
@@ -78,3 +79,15 @@ plot.em <- function(theta){
 plot.em(End_theta)
 
 
+# Clustering --------------------------------------------------------------
+
+a <- dmvnorm(faithful,End_theta$mu1,End_theta$sigma1  )
+b <- dmvnorm(faithful,End_theta$mu2,End_theta$sigma2  )
+Normal.dist. <- ifelse(a>b, "First","Second")
+
+temp <- data.frame(a = faithful$waiting, b = faithful$eruptions, c = c)
+
+ggplot(temp)+
+  geom_point(mapping = aes(x = a, y = b,color = Normal.dist.))+
+  xlab("Waiting")+
+  ylab("Eruptions")
