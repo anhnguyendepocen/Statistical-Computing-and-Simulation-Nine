@@ -5,7 +5,6 @@ library(ggplot2)
 
 # EM ----------------------------------------------------------------------
 
-
 head(faithful)
 plot(faithful$eruptions, faithful$waiting, xlab = "Eruptions", ylab = "Waiting")
 
